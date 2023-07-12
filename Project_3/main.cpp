@@ -5,7 +5,7 @@ using namespace bridges;
 
 int main(int argc, char **argv) {
     // create Bridges object
-    Bridges bridges (1, "mpityo", "543929537575");
+    Bridges bridges (1, "USERNAME", "APIKEY");
     // title, description
     bridges.setTitle("One-Dimensional Array Example");
     bridges.setDescription("Illustrates a one dimensional array with visual attributes");
