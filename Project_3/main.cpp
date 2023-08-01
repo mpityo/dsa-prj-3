@@ -1,40 +1,29 @@
 #include "Bridges.h"
-#include "Array1D.h"
+#include "Secrets.h"
+#include "DataSource.h"
+#include "data_src/EarthquakeUSGS.h"
 
 using namespace bridges;
 
+int MAX_AMOUNT = 1;
+
 int main(int argc, char **argv) {
     // create Bridges object
-    Bridges bridges (1, "USERNAME", "APIKEY");
-    // title, description
-    bridges.setTitle("One-Dimensional Array Example");
-    bridges.setDescription("Illustrates a one dimensional array with visual attributes");
+    Bridges bridges (1, username, apiKey);
+    // set title
+    bridges.setTitle("Accessing USGIS Earthquake Data (USGIS Data)");
 
-    // create, populate the array
-    Array1D<int> arr (10);
+    // read the earth quake  data
+    DataSource ds (&bridges);
+    vector<EarthquakeUSGS> eq_list = ds.getEarthquakeUSGSData(MAX_AMOUNT);
 
-    // populate the array, with squares of indices
-    // use the values to label the elements
-    for (int j = 0; j < 10; j++) {
-        arr[j] = j * j;
-        arr.getElement(j).setLabel(to_string(arr[j]));
-    }
-
-    // set visual attributes
-    arr.getElement(0).setColor("red");
-    arr.getElement(1).setColor("green");
-    arr.getElement(2).setColor("blue");
-    arr.getElement(3).setColor("cyan");
-    arr.getElement(4).setColor("magenta");
-    arr.getElement(5).setColor("yellow");
-    arr.getElement(6).setColor("red");
-    arr.getElement(7).setColor("green");
-    arr.getElement(8).setColor("blue");
-    arr.getElement(9).setColor("black");
-
-    // visualize
-    bridges.setDataStructure(&arr);
-    bridges.visualize();
+    // print the first quake record
+    cout << "Earthquake 0:" << endl;
+    cout << "\tMagnitude: " << eq_list[0].getMagnitude() << endl
+        << "\tDate: " << eq_list[0].getDateStr() << endl
+        << "\tLocation: " <<  eq_list[0].getLocation() << endl
+        << "\tLat/Long: "  << eq_list[0].getLatit() << "," <<
+        eq_list[0].getLongit() << endl;
 
     return 0;
 }
