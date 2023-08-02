@@ -7,6 +7,11 @@
 *.o
 *.obj
 
+# catch
+catch.hpp
+test.cpp
+test
+
 # Precompiled Headers
 *.gch
 *.pch
