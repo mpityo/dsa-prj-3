@@ -3,7 +3,14 @@ project(Project_3)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(CMAKE_PREFIX_PATH "/Users/matthewpityo/Qt/6.5.2/macos/")
+
+find_package(Qt6Widgets REQUIRED)
+
 add_executable(Project_3
         main.cpp
         EarthquakeData.cpp
-        EarthquakeData.h)
+        EarthquakeData.h
+        quicksort.h)
+
+target_link_libraries(Project_3 Qt6::Widgets)
