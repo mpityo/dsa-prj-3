@@ -7,6 +7,8 @@ public:
     EarthquakeData(const std::string& time, const std::string& dateStr, int year, int month, int day,
                    int hour, int minutes, int seconds, float latit, float longit,
                    const std::string& url, double magnitude);
+    EarthquakeData();
+    friend bool operator<= (const EarthquakeData& lhs, const EarthquakeData& rhs);
 
     // Getters
     std::string getTime() const;
