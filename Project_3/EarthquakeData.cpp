@@ -12,7 +12,13 @@ EarthquakeData::EarthquakeData()
       _seconds(-1), _latit(-1), _longit(-1), _url(""), _magnitude(-1.0) {}
 
 bool operator<= (const EarthquakeData& lhs, const EarthquakeData& rhs) {
-    return (lhs._year <= rhs._year);
+    return (lhs._minutes <= rhs._minutes);
+}
+bool operator< (const EarthquakeData& lhs, const EarthquakeData& rhs) {
+    return (lhs._minutes < rhs._minutes);
+}
+bool operator> (const EarthquakeData& lhs, const EarthquakeData& rhs) {
+    return (lhs._minutes > rhs._minutes);
 }
 // Getters
 std::string EarthquakeData::getTime() const {

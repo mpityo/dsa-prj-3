@@ -9,6 +9,8 @@ public:
                    const std::string& url, double magnitude);
     EarthquakeData();
     friend bool operator<= (const EarthquakeData& lhs, const EarthquakeData& rhs);
+    friend bool operator> (const EarthquakeData& lhs, const EarthquakeData& rhs);
+    friend bool operator< (const EarthquakeData& lhs, const EarthquakeData& rhs);
 
     // Getters
     std::string getTime() const;

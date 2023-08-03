@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int RECORDS_TO_LOAD = 50;
+int RECORDS_TO_LOAD = 50000;
 
 vector<string> splitString(const string& input, char delimiter) {
     vector<string> tokens;
