@@ -3,10 +3,8 @@
 #include <iostream>
 #include <cmath>
 
-std::vector<float> TEST = {0,9,3,54,1,3,578,43,123434,245,342,453656,67,5431,3412,1,234,2345,56,41,14,234,24,2345,2315213,12634,436,4567456,58,9879};
-
 template <typename T>
-void Merge (std::vector<T>& arr, int start, int middle, int end) {
+void Merge (std::vector<T>& arr, int start, int middle, int end, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator) {
     int leftHalf = middle - start + 1;
     int rightHalf = end - middle;
 
@@ -25,7 +23,7 @@ void Merge (std::vector<T>& arr, int start, int middle, int end) {
 
     // copy both arrays
     while (i < leftHalf && j < rightHalf) {
-        if (left[i] <= right[j]) {
+        if (comparator(left[i],right[j],"less",true)) {
             arr[k] = left[i];
             i++;
         } else {
@@ -51,15 +49,15 @@ void Merge (std::vector<T>& arr, int start, int middle, int end) {
 }
 
 template <typename T>
-void mergeSortHelper (std::vector<T>& arr, int start, int end) {
+void mergeSortHelper (std::vector<T>& arr, int start, int end, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator) {
     if (start < end) {
         int middle = floor((start + end) / 2);
-        mergeSortHelper(arr,start,middle);
-        mergeSortHelper(arr,middle + 1,end);
-        Merge(arr, start, middle, end);
+        mergeSortHelper(arr,start,middle,comparator);
+        mergeSortHelper(arr,middle + 1,end,comparator);
+        Merge(arr, start, middle, end,comparator);
     }
 }
 template <typename T>
-void mergeSort (std::vector<T>& v) {
-    mergeSortHelper(v,0,v.size()-1);
+void mergeSort (std::vector<T>& v, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator) {
+    mergeSortHelper(v,0,v.size()-1,comparator);
 }

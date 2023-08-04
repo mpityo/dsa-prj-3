@@ -1,32 +1,75 @@
-#include "DataLoader.cpp"
+#include "DataLoader.h"
 #include "mergesort.h"
 #include "quicksort.h"
+#include "comparators.h"
 #include <chrono>
 //#include <QApplication>
 //#include <QLabel>
 
 int main(int argc, char **argv) {
-    
-    std::vector<EarthquakeData> earthquakeData = loadEarthquakeDataFromCSV("./data.csv");
-    std::vector<EarthquakeData> earthquakeData2 = loadEarthquakeDataFromCSV("./data.csv");
-    cout << "1: " << earthquakeData.size() << " records loaded." << endl;
-    cout << "2: " << earthquakeData2.size() << " records loaded." << endl;
 
-    // Measure time for quicksort
-    auto start_quick = std::chrono::high_resolution_clock::now();
-    quickSort(earthquakeData);
-    auto end_quick = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
+    // Load Data from File
+    // Amount loaded can be adjusted in DataLoader.cpp
+    vector<EarthquakeData> earthquakeData = loadEarthquakeDataFromCSV("./data.csv");
+    vector<EarthquakeData> earthquakeData2 = loadEarthquakeDataFromCSV("./data.csv");
+    cout << "Vector 1: " << earthquakeData.size() << " records loaded." << endl;
+    cout << "Vector 2: " << earthquakeData2.size() << " records loaded.\n" << endl;
 
-    // Measure time for mergesort
-    auto start_merge = std::chrono::high_resolution_clock::now();
-    mergeSort(earthquakeData2);
-    auto end_merge = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+    function<bool(const EarthquakeData&, const EarthquakeData&, string operation, bool equals)> comparator;
+    int userChoice = 0;
+    while (userChoice != -1) {
+        cout << "Enter your choice for sorting: (1 for magnitude, 2 for latitude, 3 for longitude, 4 for date, ~Any other to exit): ";
+        string choiceString;
+        cin >> userChoice;
+        switch (userChoice) {
+            case 1:
+                comparator = compareByMagnitude;
+                choiceString = "Magnitude";
+                break;
+            case 2:
+                comparator = compareByLatitude;
+                choiceString = "Latitude";
+                break;
+            case 3:
+                comparator = compareByLongitude;
+                choiceString = "Longitude";
+                break;
+            case 4:
+                comparator = compareByDate;
+                choiceString = "Date";
+                break;
+            default:
+                cout << "Exiting Program" << endl;
+                return -1;
+        }
+        
+        // Measure time for quicksort
+        auto start_quick = chrono::high_resolution_clock::now();
+        quickSort(earthquakeData, comparator);
+        auto end_quick = chrono::high_resolution_clock::now();
+        chrono::duration<double> elapsed_quick = end_quick - start_quick;
+        
+        // Measure time for mergesort
+        auto start_merge = chrono::high_resolution_clock::now();
+        mergeSort(earthquakeData2, comparator);
+        auto end_merge = chrono::high_resolution_clock::now();
+        chrono::duration<double> elapsed_merge = end_merge - start_merge;
 
-    std::cout << "Quicksort took: " << elapsed_quick.count() << " seconds.\n";
-    std::cout << "Mergesort took: " << elapsed_merge.count() << " seconds.\n";
+        cout << "Quicksort took: " << elapsed_quick.count() << " seconds.\n";
+        cout << "Mergesort took: " << elapsed_merge.count() << " seconds.\n\n";
 
+        cout << "Quick Sort by " << choiceString << ":" << endl;
+        for (auto i: earthquakeData) {
+            i.printData();
+        }
+        cout << "\n\n";
+
+        cout << "Merge Sort by " << choiceString << ":" << endl;
+        for (auto i: earthquakeData2) {
+            i.printData();
+        }
+        cout << "\n\n";
+    }
     return 0;
 //    QApplication app(argc, argv);
 //
