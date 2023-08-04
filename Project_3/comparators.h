@@ -1,4 +1,10 @@
-bool compareByMagnitude(const EarthquakeData& a, const EarthquakeData& b, string comparison, bool equal) {
+// Use these to compare complex data within the EarthquakeData class based on user input
+// These will be passed to the sorting functions
+// =======
+// Comparison can be either "less" or "greater"
+// Equal is true if the comparison is "equal to" and false if it's just less than or greater than
+
+bool compareByMagnitude(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getMagnitude() <= b.getMagnitude();
@@ -10,10 +16,9 @@ bool compareByMagnitude(const EarthquakeData& a, const EarthquakeData& b, string
         else
             return a.getMagnitude() > b.getMagnitude();
     }
-
 }
 
-bool compareByLatitude(const EarthquakeData& a, const EarthquakeData& b, string comparison, bool equal) {
+bool compareByLatitude(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getLatitude() <= b.getLatitude();
@@ -27,7 +32,7 @@ bool compareByLatitude(const EarthquakeData& a, const EarthquakeData& b, string 
     }
 }
 
-bool compareByLongitude(const EarthquakeData& a, const EarthquakeData& b, string comparison, bool equal) {
+bool compareByLongitude(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getLongitude() <= b.getLongitude();
@@ -41,7 +46,7 @@ bool compareByLongitude(const EarthquakeData& a, const EarthquakeData& b, string
     }
 }
 
-bool compareByDate(const EarthquakeData& a, const EarthquakeData& b, string comparison, bool equal) {
+bool compareByDate(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getDateStr() <= b.getDateStr();
