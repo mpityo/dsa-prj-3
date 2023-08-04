@@ -7,8 +7,9 @@
 #include <QPainter>
 #include <QPushButton>
 
-void welcome_window()
+int welcome_window(int argc, char **argv)
 {
+    QApplication app(argc, argv);
     QWidget window;
     window.setFixedSize(574, 427);
 
@@ -35,4 +36,5 @@ void welcome_window()
     window.show();
     window.setWindowTitle(
             QApplication::translate("toplevel", "Project 3"));
+    return app.exec();
 }
