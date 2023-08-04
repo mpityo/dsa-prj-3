@@ -2,7 +2,7 @@
 #include <vector>
 
 template <typename T>
-int partition(std::vector<T>& v, int low, int high, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator)
+int partition(std::vector<T>& v, int low, int high, std::function<bool(const T&, const T&, std::string comparison, bool equal)> comparator)
 {
     // Select pivot to be the first element, this can cause worst-case performance for nearly-sorted or nearly-reverse-sorted data,
     // but since the data is random, we don't have to deal with that problem.
@@ -42,7 +42,7 @@ int partition(std::vector<T>& v, int low, int high, std::function<bool(const T&,
 }
 
 template <typename T>
-void quickSortHelper(std::vector<T>& v, int low, int high, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator)
+void quickSortHelper(std::vector<T>& v, int low, int high, std::function<bool(const T&, const T&, std::string comparison, bool equal)> comparator)
 {
     if(low < high)
     {
@@ -54,7 +54,7 @@ void quickSortHelper(std::vector<T>& v, int low, int high, std::function<bool(co
 }
 
 template <typename T>
-void quickSort(std::vector<T>& v, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator)
+void quickSort(std::vector<T>& v, std::function<bool(const T&, const T&, std::string comparison, bool equal)> comparator)
 {
     quickSortHelper(v, 0, v.size() - 1, comparator);
 }

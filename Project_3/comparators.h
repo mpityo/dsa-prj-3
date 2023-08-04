@@ -4,7 +4,7 @@
 // Comparison can be either "less" or "greater"
 // Equal is true if the comparison is "equal to" and false if it's just less than or greater than
 
-bool compareByMagnitude(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
+bool compareByMagnitude(const EarthquakeData& a, const EarthquakeData& b, const std::string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getMagnitude() <= b.getMagnitude();
@@ -18,7 +18,7 @@ bool compareByMagnitude(const EarthquakeData& a, const EarthquakeData& b, const 
     }
 }
 
-bool compareByLatitude(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
+bool compareByLatitude(const EarthquakeData& a, const EarthquakeData& b, const std::string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getLatitude() <= b.getLatitude();
@@ -32,7 +32,7 @@ bool compareByLatitude(const EarthquakeData& a, const EarthquakeData& b, const s
     }
 }
 
-bool compareByLongitude(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
+bool compareByLongitude(const EarthquakeData& a, const EarthquakeData& b, const std::string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getLongitude() <= b.getLongitude();
@@ -46,7 +46,7 @@ bool compareByLongitude(const EarthquakeData& a, const EarthquakeData& b, const 
     }
 }
 
-bool compareByDate(const EarthquakeData& a, const EarthquakeData& b, const string& comparison, bool equal) {
+bool compareByDate(const EarthquakeData& a, const EarthquakeData& b, const std::string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
             return a.getDateStr() <= b.getDateStr();

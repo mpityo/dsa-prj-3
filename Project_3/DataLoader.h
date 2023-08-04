@@ -5,54 +5,54 @@
 #include <vector>
 #include "EarthquakeData.h"
 
-using namespace std;
+
 
 int RECORDS_TO_LOAD = 10;
 
-vector<string> splitString(const string& input, char delimiter) {
-    vector<string> tokens;
-    stringstream ss(input);
-    string token;
+std::vector<std::string> splitString(const std::string& input, char delimiter) {
+    std::vector<std::string> tokens;
+    std::stringstream ss(input);
+    std::string token;
     while (getline(ss, token, delimiter)) {
         tokens.push_back(token);
     }
     return tokens;
 }
 
-vector<EarthquakeData> loadEarthquakeDataFromCSV(const string& filename) {
-    vector<EarthquakeData> dataObjects;
-    ifstream inFile(filename);
+std::vector<EarthquakeData> loadEarthquakeDataFromCSV(const std::string& filename) {
+    std::vector<EarthquakeData> dataObjects;
+    std::ifstream inFile(filename);
     if (!inFile) {
-        cout << "Error opening file: " << filename << endl;
+        std::cout << "Error opening file: " << filename << std::endl;
         return dataObjects;
     }
 
     // Read the header line to validate the order of columns
-    string header;
+    std::string header;
     getline(inFile, header);
 
-    const string expectedHeader = "Time,Date,Year,Month,Day,Hour,Minutes,Seconds,Latit,Longit,Url,Magnitude";
+    const std::string expectedHeader = "Time,Date,Year,Month,Day,Hour,Minutes,Seconds,Latit,Longit,Url,Magnitude";
     if (header != expectedHeader) {
-        cout << "Invalid header format" << endl;
+        std::cout << "Invalid header format" << std::endl;
         return dataObjects;
     }
 
     // Read data lines and create EarthquakeData objects
     while (inFile) {
-        string line;
+        std::string line;
         if (!getline(inFile, line))
             break;
 
         // Use string stream to split the line into individual values
-        vector<string> values = splitString(line, ',');
+        std::vector<std::string> values = splitString(line, ',');
         if (values.size() != 12) {
-            cout << "Invalid number of values" << endl;
+            std::cout << "Invalid number of values" << std::endl;
             continue;
         }
 
         // Parse values and create an EarthquakeData object
-        string time = values[0];
-        string dateStr = values[1];
+        std::string time = values[0];
+        std::string dateStr = values[1];
         int year = stoi(values[2]);
         int month = stoi(values[3]);
         int day = stoi(values[4]);
@@ -61,7 +61,7 @@ vector<EarthquakeData> loadEarthquakeDataFromCSV(const string& filename) {
         int seconds = stoi(values[7]);
         float latit = stof(values[8]);
         float longit = stof(values[9]);
-        string url = values[10];
+        std::string url = values[10];
         double magnitude = stod(values[11]);
 
         EarthquakeData data(time, dateStr, year, month, day, hour, minutes, seconds, latit, longit, url, magnitude);

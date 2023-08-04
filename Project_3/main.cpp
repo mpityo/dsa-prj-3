@@ -2,19 +2,27 @@
 #include "mergesort.h"
 #include "quicksort.h"
 #include "comparators.h"
+#include <QApplication>
 #include <chrono>
+#include "welcome_window.h"
+#include <functional>
+using std::vector;
+using std::cout;
+using std::cin;
+using std::string;
+using std::endl;
 
 int main(int argc, char **argv) {
-
     //=== INITIALIZE
     // Load Data from data.csv File
     // Amount loaded can be adjusted in DataLoader.cpp
-    vector<EarthquakeData> earthquakeData = loadEarthquakeDataFromCSV("./data.csv");
-    vector<EarthquakeData> earthquakeData2 = loadEarthquakeDataFromCSV("./data.csv");
+    vector<EarthquakeData> earthquakeData = loadEarthquakeDataFromCSV("../data.csv");
+    vector<EarthquakeData> earthquakeData2 = loadEarthquakeDataFromCSV("../data.csv");
     cout << "Vector 1: " << earthquakeData.size() << " records loaded." << endl;
     cout << "Vector 2: " << earthquakeData2.size() << " records loaded.\n" << endl;
+
     // function reference for passing into sorting classes
-    function<bool(const EarthquakeData&, const EarthquakeData&, string operation, bool equals)> comparator;
+    std::function<bool(const EarthquakeData&, const EarthquakeData&, string operation, bool equals)> comparator;
 
 
     //=== GET INPUT
@@ -49,16 +57,16 @@ int main(int argc, char **argv) {
 
         //=== MEASURE TIME
         // quicksort
-        auto start_quick = chrono::high_resolution_clock::now();
+        auto start_quick = std::chrono::high_resolution_clock::now();
         quickSort(earthquakeData, comparator);
-        auto end_quick = chrono::high_resolution_clock::now();
-        chrono::duration<double> elapsed_quick = end_quick - start_quick;
-        
+        auto end_quick = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
+
         // mergesort
-        auto start_merge = chrono::high_resolution_clock::now();
+        auto start_merge = std::chrono::high_resolution_clock::now();
         mergeSort(earthquakeData2, comparator);
-        auto end_merge = chrono::high_resolution_clock::now();
-        chrono::duration<double> elapsed_merge = end_merge - start_merge;
+        auto end_merge = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
 
 
         //=== PRINT
@@ -79,6 +87,7 @@ int main(int argc, char **argv) {
         cout << "\n\n";
     }
 
-    //=== END
-    return 0;
+    // gui
+
+
 }

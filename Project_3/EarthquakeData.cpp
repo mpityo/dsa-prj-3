@@ -1,5 +1,6 @@
 #include <iostream>
 #include "EarthquakeData.h"
+#include <functional>
 
 // Constructor
 EarthquakeData::EarthquakeData(const std::string& time, const std::string& dateStr, int year, int month, int day,

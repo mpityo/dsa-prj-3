@@ -2,9 +2,10 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
+#include <functional>
 
 template <typename T>
-void Merge (std::vector<T>& arr, int start, int middle, int end, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator) {
+void Merge (std::vector<T>& arr, int start, int middle, int end, std::function<bool(const T&, const T&, std::string comparison, bool equal)> comparator) {
     int leftHalf = middle - start + 1;
     int rightHalf = end - middle;
 
@@ -49,7 +50,7 @@ void Merge (std::vector<T>& arr, int start, int middle, int end, std::function<b
 }
 
 template <typename T>
-void mergeSortHelper (std::vector<T>& arr, int start, int end, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator) {
+void mergeSortHelper (std::vector<T>& arr, int start, int end, std::function<bool(const T&, const T&, std::string comparison, bool equal)> comparator) {
     if (start < end) {
         int middle = floor((start + end) / 2);
         mergeSortHelper(arr,start,middle,comparator);
@@ -58,6 +59,6 @@ void mergeSortHelper (std::vector<T>& arr, int start, int end, std::function<boo
     }
 }
 template <typename T>
-void mergeSort (std::vector<T>& v, std::function<bool(const T&, const T&, string comparison, bool equal)> comparator) {
+void mergeSort (std::vector<T>& v, std::function<bool(const T&, const T&, std::string comparison, bool equal)> comparator) {
     mergeSortHelper(v,0,v.size()-1,comparator);
 }
