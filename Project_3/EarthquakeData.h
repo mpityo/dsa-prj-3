@@ -8,7 +8,6 @@ public:
                    int hour, int minutes, int seconds, float latit, float longit,
                    const std::string& url, double magnitude);
     EarthquakeData();
-    friend bool operator<= (const EarthquakeData& lhs, const EarthquakeData& rhs);
 
     // Getters
     std::string getTime() const;
@@ -24,19 +23,8 @@ public:
     std::string getURL() const;
     double getMagnitude() const;
 
-    // Setters
-    void setTime(const std::string& time);
-    void setDateStr(const std::string& dateStr);
-    void setYear(int year);
-    void setMonth(int month);
-    void setDay(int day);
-    void setHour(int hour);
-    void setMinutes(int minutes);
-    void setSeconds(int seconds);
-    void setLatitude(float latit);
-    void setLongitude(float longit);
-    void setURL(const std::string& url);
-    void setMagnitude(double magnitude);
+    // Operations
+    void printData();
 
 private:
     std::string _time;
