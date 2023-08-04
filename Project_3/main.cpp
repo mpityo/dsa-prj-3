@@ -13,6 +13,7 @@ using std::string;
 using std::endl;
 
 int main(int argc, char **argv) {
+    welcome_window(argc, argv);
     //=== INITIALIZE
     // Load Data from data.csv File
     // Amount loaded can be adjusted in DataLoader.cpp
@@ -87,6 +88,5 @@ int main(int argc, char **argv) {
     }
 
     // gui
-    welcome_window(argc, argv);
 
 }
