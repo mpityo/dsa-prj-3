@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
         earthquakeWindow->setFixedSize(574, 427);
         earthquakeWindow->setStyleSheet("QWidget {background-image: url(../Images/bcko.png)}");
 
-        QLabel* earthquakeLabel = new QLabel("Comparison between Quick Sort and Merge Sort");
+        QLabel* earthquakeLabel = new QLabel("Earthquake Data");
         earthquakeLabel->setFont(f);
         earthquakeLabel->setStyleSheet("QLabel {color : white; background: transparent}");
         earthquakeLabel->move(286- ((earthquakeWindow->width() - earthquakeLabel->sizeHint().width()) / 2), 10);
@@ -120,7 +120,7 @@ int main(int argc, char **argv) {
 
         QPushButton* longitudeSort = new QPushButton("Longitude");
         longitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
-        QObject::connect(longitudeSort, &QPushButton::clicked, [&]() {
+        QObject::connect(longitudeSort, &QPushButton::clicked, [&, earthquakeWindow]() {
             comparator = compareByLongitude;
             string choiceString = "Longitude";
 
@@ -135,8 +135,17 @@ int main(int argc, char **argv) {
             mergeSort(earthquakeData2, comparator);
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
-            cout << "Quicksort took: " << elapsed_quick.count() << " seconds.\n";
-            cout << "Mergesort took: " << elapsed_merge.count() << " seconds.\n\n";
+            //cout << "Quicksort took: " << elapsed_quick.count() << " seconds.\n";
+            //cout << "Mergesort took: " << elapsed_merge.count() << " seconds.\n\n";
+            QString message = "Quicksort took: " + QString::number(elapsed_quick.count()) + " seconds.\n" +
+                              "Mergesort took: " + QString::number(elapsed_merge.count()) + " seconds.\n";
+            //QMessageBox::information(earthquakeWindow, "Sorting times", message);
+
+            QMessageBox messageBox;
+            messageBox.setWindowTitle("Sorting times");
+            messageBox.setText(message);
+            messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
+            messageBox.exec();
 
             cout << "Quick Sort by " << choiceString << ":" << endl;
             for (auto i: earthquakeData) {
