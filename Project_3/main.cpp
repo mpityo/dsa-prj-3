@@ -72,6 +72,18 @@ int main(int argc, char **argv) {
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
 
+            cout << "Quick Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData) {
+                i.printData();
+            }
+            cout << "\n\n";
+
+            cout << "Merge Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData2) {
+                i.printData();
+            }
+            cout << "\n\n";
+
         });
         buttonLayout->addWidget(dateSort);
 
@@ -91,6 +103,18 @@ int main(int argc, char **argv) {
             mergeSort(earthquakeData2, comparator);
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+
+            cout << "Quick Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData) {
+                i.printData();
+            }
+            cout << "\n\n";
+
+            cout << "Merge Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData2) {
+                i.printData();
+            }
+            cout << "\n\n";
         });
         buttonLayout->addWidget(magnitudeSort);
 
@@ -111,6 +135,20 @@ int main(int argc, char **argv) {
             mergeSort(earthquakeData2, comparator);
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+            cout << "Quicksort took: " << elapsed_quick.count() << " seconds.\n";
+            cout << "Mergesort took: " << elapsed_merge.count() << " seconds.\n\n";
+
+            cout << "Quick Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData) {
+                i.printData();
+            }
+            cout << "\n\n";
+
+            cout << "Merge Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData2) {
+                i.printData();
+            }
+            cout << "\n\n";
         });
 
         buttonLayout->addWidget(longitudeSort);
@@ -132,6 +170,18 @@ int main(int argc, char **argv) {
             mergeSort(earthquakeData2, comparator);
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+
+            cout << "Quick Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData) {
+                i.printData();
+            }
+            cout << "\n\n";
+
+            cout << "Merge Sort by " << choiceString << ":" << endl;
+            for (auto i: earthquakeData2) {
+                i.printData();
+            }
+            cout << "\n\n";
         });
         buttonLayout->addWidget(latitudeSort);
 
