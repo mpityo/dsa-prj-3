@@ -51,13 +51,13 @@ bool compareByLongitude(const EarthquakeData& a, const EarthquakeData& b, const 
 bool compareByDate(const EarthquakeData& a, const EarthquakeData& b, const std::string& comparison, bool equal) {
     if (comparison == "less") {
         if (equal)
-            return a.getDateStr() <= b.getDateStr();
+            return (a.getDateNumber() <= b.getDateNumber());
         else
-            return a.getDateStr() < b.getDateStr();
+            return (a.getDateNumber() < b.getDateNumber());
     } else {
         if (equal)
-            return a.getDateStr() >= b.getDateStr();
+            return (a.getDateNumber() >= b.getDateNumber());
         else
-            return a.getDateStr() > b.getDateStr();
+            return (a.getDateNumber() > b.getDateNumber());
     }
 }

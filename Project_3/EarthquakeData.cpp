@@ -63,6 +63,13 @@ double EarthquakeData::getMagnitude() const {
     return _magnitude;
 }
 
+long EarthquakeData::getDateNumber() const {
+    int a = (14 - _month) / 12;
+    int y = _year + 4800 - a;
+    int m = _month + 12 * a - 3;
+    return _day + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045;
+}
+
 // Operations
 void EarthquakeData::printData() {
     std::cout << "Magnitude: " << _magnitude << std::endl;

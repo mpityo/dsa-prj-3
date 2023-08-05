@@ -50,7 +50,7 @@ void quickSortHelper(std::vector<T>& v, int low, int high, std::function<bool(co
         quickSortHelper(v, low, pivot - 1, comparator);
         quickSortHelper(v, pivot + 1, high, comparator);
     }
- 
+
 }
 
 template <typename T>

@@ -22,6 +22,7 @@ public:
     float getLongitude() const;
     std::string getURL() const;
     double getMagnitude() const;
+    long getDateNumber() const;
 
     // Operations
     void printData();
