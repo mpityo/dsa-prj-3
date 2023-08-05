@@ -13,7 +13,7 @@ using std::string;
 using std::endl;
 
 int main(int argc, char **argv) {
-    welcome_window(argc, argv);
+
     //=== INITIALIZE
     // Load Data from data.csv File
     // Amount loaded can be adjusted in DataLoader.cpp
@@ -23,6 +23,133 @@ int main(int argc, char **argv) {
     cout << "Vector 2: " << earthquakeData2.size() << " records loaded.\n" << endl;
     // function reference for passing into sorting classes
     std::function<bool(const EarthquakeData&, const EarthquakeData&, string operation, bool equals)> comparator;
+
+    QApplication app(argc, argv);
+
+    QWidget welcomeWindow;
+    welcomeWindow.setFixedSize(574, 427);
+    welcomeWindow.setStyleSheet("QWidget {background-image: url(../Images/bcko.png)}");
+
+    QLabel welcomeLabel(&welcomeWindow);
+    welcomeLabel.setText("Welcome to Our Application");
+    QFont f("Arial", 15);
+    welcomeLabel.setFont(f);
+    welcomeLabel.setStyleSheet("QLabel {color : white; background: transparent}");
+    welcomeLabel.move(286 - (welcomeLabel.sizeHint().width() / 2), 36);
+
+    QPushButton welcomeButton("Start!", &welcomeWindow);
+    welcomeButton.move(286 - (welcomeButton.sizeHint().width() / 2), 330);
+    welcomeButton.setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+
+    QObject::connect(&welcomeButton, &QPushButton::clicked, [&]() {
+        QWidget* earthquakeWindow = new QWidget;
+        earthquakeWindow->setFixedSize(574, 427);
+        earthquakeWindow->setStyleSheet("QWidget {background-image: url(../Images/bcko.png)}");
+
+        QLabel* earthquakeLabel = new QLabel("Comparison between Quick Sort and Merge Sort");
+        earthquakeLabel->setFont(f);
+        earthquakeLabel->setStyleSheet("QLabel {color : white; background: transparent}");
+        earthquakeLabel->move(286- ((earthquakeWindow->width() - earthquakeLabel->sizeHint().width()) / 2), 10);
+
+        QHBoxLayout* buttonLayout = new QHBoxLayout;
+
+        QPushButton* dateSort = new QPushButton("Date");
+        dateSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+
+        QObject::connect(dateSort, &QPushButton::clicked, [&]() {
+            comparator = compareByDate;
+            string choiceString = "Date";
+
+            // quicksort
+            auto start_quick = std::chrono::high_resolution_clock::now();
+            quickSort(earthquakeData, comparator);
+            auto end_quick = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
+
+            // mergesort
+            auto start_merge = std::chrono::high_resolution_clock::now();
+            mergeSort(earthquakeData2, comparator);
+            auto end_merge = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+
+        });
+        buttonLayout->addWidget(dateSort);
+
+        QPushButton* magnitudeSort = new QPushButton("MagnitudeSort");
+        magnitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        QObject::connect(magnitudeSort, &QPushButton::clicked, [&]() {
+            comparator = compareByMagnitude;
+            string choiceString = "Magnitude";
+            // quicksort
+            auto start_quick = std::chrono::high_resolution_clock::now();
+            quickSort(earthquakeData, comparator);
+            auto end_quick = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
+
+            // mergesort
+            auto start_merge = std::chrono::high_resolution_clock::now();
+            mergeSort(earthquakeData2, comparator);
+            auto end_merge = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+        });
+        buttonLayout->addWidget(magnitudeSort);
+
+        QPushButton* longitudeSort = new QPushButton("Longitude");
+        longitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        QObject::connect(longitudeSort, &QPushButton::clicked, [&]() {
+            comparator = compareByLongitude;
+            string choiceString = "Longitude";
+
+            // quicksort
+            auto start_quick = std::chrono::high_resolution_clock::now();
+            quickSort(earthquakeData, comparator);
+            auto end_quick = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
+
+            // mergesort
+            auto start_merge = std::chrono::high_resolution_clock::now();
+            mergeSort(earthquakeData2, comparator);
+            auto end_merge = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+        });
+
+        buttonLayout->addWidget(longitudeSort);
+
+        QPushButton* latitudeSort = new QPushButton("Latitude");
+        latitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        QObject::connect(latitudeSort, &QPushButton::clicked, [&]() {
+            comparator = compareByLatitude;
+            string choiceString = "Latitude";
+
+            // quicksort
+            auto start_quick = std::chrono::high_resolution_clock::now();
+            quickSort(earthquakeData, comparator);
+            auto end_quick = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
+
+            // mergesort
+            auto start_merge = std::chrono::high_resolution_clock::now();
+            mergeSort(earthquakeData2, comparator);
+            auto end_merge = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
+        });
+        buttonLayout->addWidget(latitudeSort);
+
+        QVBoxLayout* mainLayout = new QVBoxLayout;
+        mainLayout->addWidget(earthquakeLabel);
+        mainLayout->addSpacing(500);
+        mainLayout->addLayout(buttonLayout);
+        earthquakeLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+        earthquakeWindow->setLayout(mainLayout);
+        earthquakeWindow->show();
+
+        welcomeWindow.close();
+    });
+
+    welcomeWindow.show();
+    return app.exec();
+
 
 
     //=== GET INPUT
