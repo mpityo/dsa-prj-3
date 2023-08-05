@@ -6,10 +6,10 @@
 #include <QDir>
 #include <QPainter>
 #include <QPushButton>
+#include "earthquakeTable.h"
 
-int welcome_window(int argc, char **argv)
+void welcome_window()
 {
-    QApplication app(argc, argv);
     QWidget window;
     window.setFixedSize(574, 427);
 
@@ -33,8 +33,10 @@ int welcome_window(int argc, char **argv)
     QPushButton button ("Start!", &window);
     button.move(286 - (button.sizeHint().width() / 2), 330);
     button.setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
-    window.show();
     window.setWindowTitle(
             QApplication::translate("toplevel", "Project 3"));
-    return app.exec();
+    QObject::connect(&button, &QPushButton::clicked, [&]() {
+        earthquakeTable_window();
+    });
+    window.show();
 }
