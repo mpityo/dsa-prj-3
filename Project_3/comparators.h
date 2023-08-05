@@ -1,3 +1,5 @@
+#pragma once
+
 // Use these to compare complex data within the EarthquakeData class based on user input
 // These will be passed to the sorting functions
 // =======

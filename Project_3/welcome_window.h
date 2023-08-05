@@ -1,3 +1,4 @@
+#pragma once
 #include <QLabel>
 #include <QtWidgets>
 #include <QLabel>
@@ -7,36 +8,65 @@
 #include <QPainter>
 #include <QPushButton>
 #include "earthquakeTable.h"
+#include "earthquake_window.h"
 
-void welcome_window()
-{
-    QWidget window;
-    window.setFixedSize(574, 427);
 
-//Color Window and add background image
-    QPalette pal = window.palette();
-    window.setStyleSheet("QWidget {background-image: url(../Images/bcko.png)}");
+class WelcomeWindow{
+    QWidget* welcomeWindow;
+public:
 
-//Add Welcome text to window
-    QLabel *welcomeLabel = new QLabel(&window);
-    welcomeLabel->setText("Welcome To Our Application");
+    WelcomeWindow(vector<EarthquakeData>& earthquakeData, vector<EarthquakeData>& earthquakeData2, std::function<bool(const EarthquakeData&, const EarthquakeData&, string operation, bool equals)>& comparator)
+    {
+        welcomeWindow = new QWidget();
+        welcomeWindow->setFixedSize(574, 427);
 
-//change font size and font type
-    QFont f("Arial", 15);
-    welcomeLabel->setFont(f);
+        //Color Window and add background image
+        QPalette pal = welcomeWindow->palette();
+        welcomeWindow->setStyleSheet("QWidget {background-image: url(../Images/bcko.png)}");
 
-//center text and change color
-    welcomeLabel->setStyleSheet("QLabel {color : white; background: transparent}");
-    welcomeLabel->move(286 - (welcomeLabel->sizeHint().width() / 2), 36);
+        //Add Welcome text to window
+        QLabel *welcomeLabel = new QLabel(welcomeWindow);
+        welcomeLabel->setText("Welcome To Our Application");
 
-// Add button
-    QPushButton button ("Start!", &window);
-    button.move(286 - (button.sizeHint().width() / 2), 330);
-    button.setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
-    window.setWindowTitle(
-            QApplication::translate("toplevel", "Project 3"));
-    QObject::connect(&button, &QPushButton::clicked, [&]() {
-        earthquakeTable_window();
-    });
-    window.show();
-}
+        //change font size and font type
+        QFont f("Arial", 15);
+        welcomeLabel->setFont(f);
+
+        //center text and change color
+        welcomeLabel->setStyleSheet("QLabel {color : white; background: transparent}");
+        welcomeLabel->move(286 - (welcomeLabel->sizeHint().width() / 2), 36);
+
+        // Add button
+        QPushButton* welcomebutton = new QPushButton("Start!", welcomeWindow);
+        //QPushButton button ("Start!", welcomeWindow);
+        welcomebutton->move(286 - (welcomebutton->sizeHint().width() / 2), 330);
+        welcomebutton->setStyleSheet("QPushButton {color:white;background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+
+        // Set Title
+        welcomeWindow->setWindowTitle(QApplication::translate("toplevel", "Project 3"));
+
+        QObject::connect(welcomebutton, &QPushButton::clicked, [&]() {
+            welcomeWindow->close();
+            delete welcomeWindow;
+            Earthquake_window* earthquakeWindow = new Earthquake_window(earthquakeData, earthquakeData2, comparator);
+            earthquakeWindow->show();
+        });
+    }
+
+    ~WelcomeWindow()
+    {
+        // This also deletes all the children of welcomeWindow
+        delete welcomeWindow;
+    }
+
+    void show()
+    {
+        welcomeWindow->show();
+    }
+
+    void close()
+    {
+        welcomeWindow->close();
+    }
+
+};

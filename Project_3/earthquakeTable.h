@@ -1,6 +1,7 @@
 //
 // Created by deepd on 8/5/2023.
 //
+#pragma once
 #include <QLabel>
 #include <QtWidgets>
 #include <QLabel>
