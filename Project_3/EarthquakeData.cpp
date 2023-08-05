@@ -1,6 +1,7 @@
 #include <iostream>
 #include "EarthquakeData.h"
 #include <functional>
+#include <sstream>
 
 // Constructor
 EarthquakeData::EarthquakeData(const std::string& time, const std::string& dateStr, int year, int month, int day,
@@ -68,4 +69,13 @@ void EarthquakeData::printData() {
     std::cout << "Date: " << _dateStr << std::endl;
     std::cout << "Latitude: " << _latit << ", Longitude: " << _longit << std::endl;
     std::cout << "URL: " << _url << std::endl;
+}
+
+std::string EarthquakeData::toString() {
+    std::ostringstream ss;
+    ss << "Magnitude: " << _magnitude << "\n";
+    ss << "Date: " << _dateStr << "\n";
+    ss << "Latitude: " << _latit << ", Longitude: " << _longit << "\n";
+    ss << "URL: " << _url << "\n";
+    return ss.str();
 }
