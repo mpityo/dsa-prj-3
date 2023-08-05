@@ -52,11 +52,15 @@ int main(int argc, char **argv) {
         earthquakeLabel->move(286- ((earthquakeWindow->width() - earthquakeLabel->sizeHint().width()) / 2), 10);
 
         QHBoxLayout* buttonLayout = new QHBoxLayout;
+        QVBoxLayout* listLayout = new QVBoxLayout;
+        QListWidget* listWidget = new QListWidget;
+        listWidget->setStyleSheet("QListWidget {background-color:white;} QListWidget::item {color: white;}");
+        listLayout->addWidget(listWidget);
 
         QPushButton* dateSort = new QPushButton("Date");
         dateSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
 
-        QObject::connect(dateSort, &QPushButton::clicked, [&]() {
+        QObject::connect(dateSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByDate;
             string choiceString = "Date";
 
@@ -72,24 +76,38 @@ int main(int argc, char **argv) {
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
 
-            cout << "Quick Sort by " << choiceString << ":" << endl;
-            for (auto i: earthquakeData) {
-                i.printData();
-            }
-            cout << "\n\n";
+            QString message = "Quicksort took: " + QString::number(elapsed_quick.count()) + " seconds.\n" +
+                              "Mergesort took: " + QString::number(elapsed_merge.count()) + " seconds.\n";
+            QMessageBox messageBox;
+            messageBox.setWindowTitle("Sorting times");
+            messageBox.setText(message);
+            messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
+            messageBox.exec();
 
-            cout << "Merge Sort by " << choiceString << ":" << endl;
-            for (auto i: earthquakeData2) {
-                i.printData();
+            for (auto i: earthquakeData) {
+                QString qstr = QString::fromStdString(i.toString());
+                QListWidgetItem* item = new QListWidgetItem(qstr);
+                QUrl url = QUrl(QString::fromStdString(i.getURL()));
+                item->setData(Qt::UserRole, url);
+                listWidget->addItem(item);
             }
+            listWidget->show();
+
+            QObject::connect(listWidget, &QListWidget::itemClicked, [&](QListWidgetItem* item){
+                QUrl url = item->data(Qt::UserRole).toUrl();
+                if (url.isValid()) {
+                    QDesktopServices::openUrl(url);
+                }
+            });
             cout << "\n\n";
 
         });
         buttonLayout->addWidget(dateSort);
 
         QPushButton* magnitudeSort = new QPushButton("MagnitudeSort");
+
         magnitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
-        QObject::connect(magnitudeSort, &QPushButton::clicked, [&]() {
+        QObject::connect(magnitudeSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByMagnitude;
             string choiceString = "Magnitude";
             // quicksort
@@ -104,23 +122,36 @@ int main(int argc, char **argv) {
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
 
-            cout << "Quick Sort by " << choiceString << ":" << endl;
-            for (auto i: earthquakeData) {
-                i.printData();
-            }
-            cout << "\n\n";
+            QString message = "Quicksort took: " + QString::number(elapsed_quick.count()) + " seconds.\n" +
+                              "Mergesort took: " + QString::number(elapsed_merge.count()) + " seconds.\n";
+            QMessageBox messageBox;
+            messageBox.setWindowTitle("Sorting times");
+            messageBox.setText(message);
+            messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
+            messageBox.exec();
 
-            cout << "Merge Sort by " << choiceString << ":" << endl;
-            for (auto i: earthquakeData2) {
-                i.printData();
+            for (auto i: earthquakeData) {
+                QString qstr = QString::fromStdString(i.toString());
+                QListWidgetItem* item = new QListWidgetItem(qstr);
+                QUrl url = QUrl(QString::fromStdString(i.getURL()));
+                item->setData(Qt::UserRole, url);
+                listWidget->addItem(item);
             }
+            listWidget->show();
+
+            QObject::connect(listWidget, &QListWidget::itemClicked, [&](QListWidgetItem* item){
+                QUrl url = item->data(Qt::UserRole).toUrl();
+                if (url.isValid()) {
+                    QDesktopServices::openUrl(url);
+                }
+            });
             cout << "\n\n";
         });
         buttonLayout->addWidget(magnitudeSort);
 
         QPushButton* longitudeSort = new QPushButton("Longitude");
         longitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
-        QObject::connect(longitudeSort, &QPushButton::clicked, [&, earthquakeWindow]() {
+        QObject::connect(longitudeSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByLongitude;
             string choiceString = "Longitude";
 
@@ -139,24 +170,27 @@ int main(int argc, char **argv) {
             //cout << "Mergesort took: " << elapsed_merge.count() << " seconds.\n\n";
             QString message = "Quicksort took: " + QString::number(elapsed_quick.count()) + " seconds.\n" +
                               "Mergesort took: " + QString::number(elapsed_merge.count()) + " seconds.\n";
-            //QMessageBox::information(earthquakeWindow, "Sorting times", message);
-
             QMessageBox messageBox;
             messageBox.setWindowTitle("Sorting times");
             messageBox.setText(message);
             messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
             messageBox.exec();
 
-            cout << "Quick Sort by " << choiceString << ":" << endl;
             for (auto i: earthquakeData) {
-                i.printData();
+                QString qstr = QString::fromStdString(i.toString());
+                QListWidgetItem* item = new QListWidgetItem(qstr);
+                QUrl url = QUrl(QString::fromStdString(i.getURL()));
+                item->setData(Qt::UserRole, url);
+                listWidget->addItem(item);
             }
-            cout << "\n\n";
+            listWidget->show();
 
-            cout << "Merge Sort by " << choiceString << ":" << endl;
-            for (auto i: earthquakeData2) {
-                i.printData();
-            }
+            QObject::connect(listWidget, &QListWidget::itemClicked, [&](QListWidgetItem* item){
+                QUrl url = item->data(Qt::UserRole).toUrl();
+                if (url.isValid()) {
+                    QDesktopServices::openUrl(url);
+                }
+            });
             cout << "\n\n";
         });
 
@@ -164,7 +198,7 @@ int main(int argc, char **argv) {
 
         QPushButton* latitudeSort = new QPushButton("Latitude");
         latitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
-        QObject::connect(latitudeSort, &QPushButton::clicked, [&]() {
+        QObject::connect(latitudeSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByLatitude;
             string choiceString = "Latitude";
 
@@ -180,23 +214,36 @@ int main(int argc, char **argv) {
             auto end_merge = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
 
-            cout << "Quick Sort by " << choiceString << ":" << endl;
-            for (auto i: earthquakeData) {
-                i.printData();
-            }
-            cout << "\n\n";
+            QString message = "Quicksort took: " + QString::number(elapsed_quick.count()) + " seconds.\n" +
+                              "Mergesort took: " + QString::number(elapsed_merge.count()) + " seconds.\n";
+            QMessageBox messageBox;
+            messageBox.setWindowTitle("Sorting times");
+            messageBox.setText(message);
+            messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
+            messageBox.exec();
 
-            cout << "Merge Sort by " << choiceString << ":" << endl;
-            for (auto i: earthquakeData2) {
-                i.printData();
+            for (auto i: earthquakeData) {
+                QString qstr = QString::fromStdString(i.toString());
+                QListWidgetItem* item = new QListWidgetItem(qstr);
+                QUrl url = QUrl(QString::fromStdString(i.getURL()));
+                item->setData(Qt::UserRole, url);
+                listWidget->addItem(item);
             }
+            listWidget->show();
+
+            QObject::connect(listWidget, &QListWidget::itemClicked, [&](QListWidgetItem* item){
+                QUrl url = item->data(Qt::UserRole).toUrl();
+                if (url.isValid()) {
+                    QDesktopServices::openUrl(url);
+                }
+            });
             cout << "\n\n";
         });
         buttonLayout->addWidget(latitudeSort);
 
         QVBoxLayout* mainLayout = new QVBoxLayout;
         mainLayout->addWidget(earthquakeLabel);
-        mainLayout->addSpacing(500);
+        mainLayout->addLayout(listLayout);
         mainLayout->addLayout(buttonLayout);
         earthquakeLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -208,71 +255,4 @@ int main(int argc, char **argv) {
 
     welcomeWindow.show();
     return app.exec();
-
-
-
-    //=== GET INPUT
-    // From the user
-    int userChoice = 0;
-    while (userChoice != -1) {
-        cout << "Enter your choice for sorting: (1 for magnitude, 2 for latitude, 3 for longitude, 4 for date, ~Any other to exit): ";
-        string choiceString;
-        cin >> userChoice;
-        switch (userChoice) {
-            case 1:
-                comparator = compareByMagnitude;
-                choiceString = "Magnitude";
-                break;
-            case 2:
-                comparator = compareByLatitude;
-                choiceString = "Latitude";
-                break;
-            case 3:
-                comparator = compareByLongitude;
-                choiceString = "Longitude";
-                break;
-            case 4:
-                comparator = compareByDate;
-                choiceString = "Date";
-                break;
-            default:
-                cout << "Exiting Program" << endl;
-                return -1;
-        }
-
-
-        //=== MEASURE TIME
-        // quicksort
-        auto start_quick = std::chrono::high_resolution_clock::now();
-        quickSort(earthquakeData, comparator);
-        auto end_quick = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed_quick = end_quick - start_quick;
-
-        // mergesort
-        auto start_merge = std::chrono::high_resolution_clock::now();
-        mergeSort(earthquakeData2, comparator);
-        auto end_merge = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed_merge = end_merge - start_merge;
-
-
-        //=== PRINT
-        // the sorted data
-        cout << "Quicksort took: " << elapsed_quick.count() << " seconds.\n";
-        cout << "Mergesort took: " << elapsed_merge.count() << " seconds.\n\n";
-
-        cout << "Quick Sort by " << choiceString << ":" << endl;
-        for (auto i: earthquakeData) {
-            i.printData();
-        }
-        cout << "\n\n";
-
-        cout << "Merge Sort by " << choiceString << ":" << endl;
-        for (auto i: earthquakeData2) {
-            i.printData();
-        }
-        cout << "\n\n";
-    }
-
-    // gui
-
 }

@@ -26,6 +26,8 @@ public:
     // Operations
     void printData();
 
+    std::string toString();
+
 private:
     std::string _time;
     std::string _dateStr;
@@ -39,4 +41,5 @@ private:
     float _longit;
     std::string _url;
     double _magnitude;
+
 };
