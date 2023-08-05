@@ -7,7 +7,7 @@
 
 
 
-int RECORDS_TO_LOAD = 10;
+int RECORDS_TO_LOAD = 50000;
 
 std::vector<std::string> splitString(const std::string& input, char delimiter) {
     std::vector<std::string> tokens;

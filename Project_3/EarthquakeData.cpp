@@ -73,9 +73,12 @@ void EarthquakeData::printData() {
 
 std::string EarthquakeData::toString() {
     std::ostringstream ss;
-    ss << "Magnitude: " << _magnitude << "\n";
-    ss << "Date: " << _dateStr << "\n";
-    ss << "Latitude: " << _latit << ", Longitude: " << _longit << "\n";
-    ss << "URL: " << _url << "\n";
+    ss.precision(2);
+    ss<<std::fixed;
+    ss << _magnitude << "\t\t";
+    ss.precision(4);
+    ss << _latit << "\t\t";
+    ss << _longit << "\t\t";
+    ss << _dateStr << "\n";
     return ss.str();
 }

@@ -19,6 +19,8 @@ using std::cin;
 using std::string;
 using std::endl;
 
+QByteArray BUTTON_STYLE = "QPushButton {color: white; background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}";
+QString HEADER_STRING = QString::fromStdString("Magnitude\t\tLatitude\t\tLongitude\t\tDate");
 
 class Earthquake_window{
     QWidget* earthquakeWindow;
@@ -27,7 +29,7 @@ public:
     Earthquake_window(vector<EarthquakeData>& earthquakeData, vector<EarthquakeData>& earthquakeData2, std::function<bool(const EarthquakeData&, const EarthquakeData&, string operation, bool equals)>& comparator)
     {
         earthquakeWindow = new QWidget();
-        earthquakeWindow->setFixedSize(574, 427);
+        earthquakeWindow->setFixedSize(725, 427);
         earthquakeWindow->setStyleSheet("QWidget {background-image: url(../Images/bcko.png)}");
         QFont f("Arial", 15);
 
@@ -36,18 +38,17 @@ public:
         earthquakeLabel->setStyleSheet("QLabel {color : white; background: transparent}");
         earthquakeLabel->move(286- ((earthquakeWindow->width() - earthquakeLabel->sizeHint().width()) / 2), 10);
 
-        QHBoxLayout* buttonLayout = new QHBoxLayout;
+        auto buttonLayout = new QHBoxLayout;
         QVBoxLayout* listLayout = new QVBoxLayout;
         QListWidget* listWidget = new QListWidget;
-        listWidget->setStyleSheet("QListWidget {background-color:white;} QListWidget::item {color: white;}");
+        listWidget->setStyleSheet("QListWidget {background:transparent;} QListWidget::item {background:rgba(0,0,0,0.75);color: white;}");
         listLayout->addWidget(listWidget);
 
         QPushButton* dateSort = new QPushButton("Date");
-        dateSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        dateSort->setStyleSheet(BUTTON_STYLE);
 
         QObject::connect(dateSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByDate;
-            string choiceString = "Date";
 
             // quicksort
             auto start_quick = std::chrono::high_resolution_clock::now();
@@ -68,7 +69,12 @@ public:
             messageBox.setText(message);
             messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
             messageBox.exec();
+            listWidget->clear();
 
+            // headers
+            QListWidgetItem* header = new QListWidgetItem(HEADER_STRING);
+            listWidget->addItem(header);
+            // content
             for (auto i: earthquakeData) {
                 QString qstr = QString::fromStdString(i.toString());
                 QListWidgetItem* item = new QListWidgetItem(qstr);
@@ -84,17 +90,16 @@ public:
                     QDesktopServices::openUrl(url);
                 }
             });
-            cout << "\n\n";
 
         });
         buttonLayout->addWidget(dateSort);
 
-        QPushButton* magnitudeSort = new QPushButton("MagnitudeSort");
+        QPushButton* magnitudeSort = new QPushButton("Magnitude");
 
-        magnitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        magnitudeSort->setStyleSheet(BUTTON_STYLE);
         QObject::connect(magnitudeSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByMagnitude;
-            string choiceString = "Magnitude";
+
             // quicksort
             auto start_quick = std::chrono::high_resolution_clock::now();
             quickSort(earthquakeData, comparator);
@@ -114,7 +119,12 @@ public:
             messageBox.setText(message);
             messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
             messageBox.exec();
+            listWidget->clear();
 
+            // headers
+            QListWidgetItem* header = new QListWidgetItem(HEADER_STRING);
+            listWidget->addItem(header);
+            // content
             for (auto i: earthquakeData) {
                 QString qstr = QString::fromStdString(i.toString());
                 QListWidgetItem* item = new QListWidgetItem(qstr);
@@ -130,15 +140,13 @@ public:
                     QDesktopServices::openUrl(url);
                 }
             });
-            cout << "\n\n";
         });
         buttonLayout->addWidget(magnitudeSort);
 
         QPushButton* longitudeSort = new QPushButton("Longitude");
-        longitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        longitudeSort->setStyleSheet(BUTTON_STYLE);
         QObject::connect(longitudeSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByLongitude;
-            string choiceString = "Longitude";
 
             // quicksort
             auto start_quick = std::chrono::high_resolution_clock::now();
@@ -160,7 +168,12 @@ public:
             messageBox.setText(message);
             messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
             messageBox.exec();
+            listWidget->clear();
 
+            // headers
+            QListWidgetItem* header = new QListWidgetItem(HEADER_STRING);
+            listWidget->addItem(header);
+            // content
             for (auto i: earthquakeData) {
                 QString qstr = QString::fromStdString(i.toString());
                 QListWidgetItem* item = new QListWidgetItem(qstr);
@@ -176,16 +189,14 @@ public:
                     QDesktopServices::openUrl(url);
                 }
             });
-            cout << "\n\n";
         });
 
         buttonLayout->addWidget(longitudeSort);
 
         QPushButton* latitudeSort = new QPushButton("Latitude");
-        latitudeSort->setStyleSheet("QPushButton {background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        latitudeSort->setStyleSheet(BUTTON_STYLE);
         QObject::connect(latitudeSort, &QPushButton::clicked, [&, listWidget]() {
             comparator = compareByLatitude;
-            string choiceString = "Latitude";
 
             // quicksort
             auto start_quick = std::chrono::high_resolution_clock::now();
@@ -206,7 +217,12 @@ public:
             messageBox.setText(message);
             messageBox.setStyleSheet("QLabel{min-width: 400 px; font-size: 16px; color: white;} QMessageBox{background-color: rgba(0,0,0, 70%);}");
             messageBox.exec();
+            listWidget->clear();
 
+            // headers
+            QListWidgetItem* header = new QListWidgetItem(HEADER_STRING);
+            listWidget->addItem(header);
+            // content
             for (auto i: earthquakeData) {
                 QString qstr = QString::fromStdString(i.toString());
                 QListWidgetItem* item = new QListWidgetItem(qstr);
@@ -222,7 +238,6 @@ public:
                     QDesktopServices::openUrl(url);
                 }
             });
-            cout << "\n\n";
         });
         buttonLayout->addWidget(latitudeSort);
 
@@ -233,7 +248,6 @@ public:
         earthquakeLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
         earthquakeWindow->setLayout(mainLayout);
-
 
     }
 
