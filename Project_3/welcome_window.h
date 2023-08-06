@@ -10,7 +10,6 @@
 #include "earthquakeTable.h"
 #include "earthquake_window.h"
 
-
 class WelcomeWindow{
     QWidget* welcomeWindow;
 public:
@@ -40,7 +39,7 @@ public:
         QPushButton* welcomebutton = new QPushButton("Start!", welcomeWindow);
         //QPushButton button ("Start!", welcomeWindow);
         welcomebutton->move(286 - (welcomebutton->sizeHint().width() / 2), 330);
-        welcomebutton->setStyleSheet("QPushButton {color:white;background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
+        welcomebutton->setStyleSheet("QPushButton {color: white; background: rgb(91,10,10); border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;} QPushButton:pressed {color: white; background: green; border-style: outset; border-width: 1.2px; border-radius: 5px;  border-color: black; font: bold 14px; min-width: 3em;  padding: 6px;}");
 
         // Set Title
         welcomeWindow->setWindowTitle(QApplication::translate("toplevel", "Project 3"));
