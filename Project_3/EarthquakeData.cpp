@@ -64,6 +64,8 @@ double EarthquakeData::getMagnitude() const {
 }
 
 long EarthquakeData::getDateNumber() const {
+    // calculate how many days have elapsed since Jan 1, 1970
+    // Julian Day algorithm
     int a = (14 - _month) / 12;
     int y = _year + 4800 - a;
     int m = _month + 12 * a - 3;

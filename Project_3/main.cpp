@@ -21,14 +21,15 @@ int main(int argc, char **argv) {
     vector<EarthquakeData> earthquakeData2 = loadEarthquakeDataFromCSV("../data.csv");
     cout << "Vector 1: " << earthquakeData.size() << " records loaded." << endl;
     cout << "Vector 2: " << earthquakeData2.size() << " records loaded.\n" << endl;
-    // function reference for passing into sorting classes
+    // Function reference for passing into sorting classes
     std::function<bool(const EarthquakeData&, const EarthquakeData&, string operation, bool equals)> comparator;
-
+    // GUI window
     QApplication app(argc, argv);
 
+    // Create and show welcome window
     WelcomeWindow welcomeWindow(earthquakeData, earthquakeData, comparator);
     welcomeWindow.show();
-    return app.exec();
 
+    return app.exec();
 
 }

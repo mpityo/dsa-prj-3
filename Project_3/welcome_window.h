@@ -7,7 +7,6 @@
 #include <QDir>
 #include <QPainter>
 #include <QPushButton>
-#include "earthquakeTable.h"
 #include "earthquake_window.h"
 
 class WelcomeWindow{
